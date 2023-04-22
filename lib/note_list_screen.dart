@@ -4,7 +4,6 @@ import 'model/model.dart';
 import 'note_add.dart';
 import 'note_list.dart';
 
-
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({super.key});
 
@@ -26,53 +25,119 @@ class _NoteListScreenState extends State<NoteListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notes'),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Notein',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         actions: [
           IconButton(
-              onPressed: () {
-                setState(() {
-                  _noteList = NoteList();
-                  _noteList.loadNotes();
-                });
-              },
-              icon: const Icon(Icons.refresh))
+            onPressed: () {
+              setState(() {
+                _noteList = NoteList();
+                _noteList.loadNotes();
+              });
+            },
+            icon: const Icon(
+              Icons.refresh,
+              color: Colors.black,
+            ),
+          ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          setState(() {
-            _noteList = NoteList();
-            _noteList.loadNotes();
-          });
-        },
-        child: ListView.builder(
-          itemCount: _noteList.notes.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              trailing: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _noteList.delete(index);
-                    });
-                  },
-                  icon: const Icon(Icons.delete)),
-              title: Text(_noteList.notes[index].content!),
-              subtitle: Text(_noteList.notes[index].createdAt.toString()),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        NoteScreen(note: _noteList.notes[index]),
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.builder(
+            itemCount: _noteList.notes.length,
+            itemBuilder: (context, index) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      color: Colors.white,
+                      width: 5,
+                    )),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: const Color(0xffc7ffd8),
+                          ),
+                          height: 60,
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 58,
+                                width: 7,
+                                decoration: const BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(8),
+                                    topLeft: Radius.circular(8),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      _noteList.notes[index].content!,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),Text(
+                                        "14:00",
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _noteList.delete(index);
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  size: 17,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              },
-            );
-          },
+                ),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()  {
+        onPressed: () {
           Notes note = Notes();
           Navigator.push(
             context,
@@ -81,7 +146,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
             ),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.edit),
       ),
     );
   }
