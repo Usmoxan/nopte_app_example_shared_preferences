@@ -72,7 +72,9 @@ class _NoteListScreenState extends State<NoteListScreen> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: const Color(0xffc7ffd8),
+                            color:
+                                Color(int.parse(_noteList.notes[index].color!))
+                                    .withAlpha(100),
                           ),
                           height: 60,
                           child: Row(
@@ -80,9 +82,10 @@ class _NoteListScreenState extends State<NoteListScreen> {
                               Container(
                                 height: 58,
                                 width: 7,
-                                decoration: const BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.only(
+                                decoration: BoxDecoration(
+                                  color: Color(
+                                      int.parse(_noteList.notes[index].color!)),
+                                  borderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(8),
                                     topLeft: Radius.circular(8),
                                   ),
@@ -97,18 +100,17 @@ class _NoteListScreenState extends State<NoteListScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      _noteList.notes[index].content!,
+                                      _noteList.notes[index].title!,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
                                       ),
-                                    ),Text(
-                                        "14:00",
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 12
-                                        ),
-                                      ),
+                                    ),
+                                    const Text(
+                                      "14:00",
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 12),
+                                    ),
                                   ],
                                 ),
                               ),
