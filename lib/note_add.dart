@@ -1,19 +1,23 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:o_color_picker/o_color_picker.dart';
 import 'model/model.dart';
 import 'note_list.dart';
 
 class NoteScreen extends StatefulWidget {
+
   final Notes note;
 
-  const NoteScreen({super.key, required this.note});
+  NoteScreen({super.key, required this.note});
 
   @override
   _NoteScreenState createState() => _NoteScreenState();
 }
 
 class _NoteScreenState extends State<NoteScreen> {
+  Color? selectedColor = Colors.lightGreen[300];
   late TextEditingController _textEditingController, _titleEditingController;
 
   late NoteList _noteList;
@@ -36,6 +40,7 @@ class _NoteScreenState extends State<NoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var fullMaterialColors;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -68,15 +73,48 @@ class _NoteScreenState extends State<NoteScreen> {
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: const [
-                Text(
+            child: Column(
+              children: [
+               const Text(
                   "Welcome to Notein",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                   ),
                 ),
+         
+                TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (var states) => selectedColor!,
+              )),
+              child: Text(
+                '',
+                style: TextStyle(
+                color: Colors.black,
+                ),
+              ),
+              onPressed: () => showDialog<void>(
+                context: context,
+                builder: (_) => Material(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    OColorPicker(
+                      selectedColor: selectedColor,
+                      colors: primaryColorsPalette,
+                      onColorChange: (color) {
+                        setState(() {
+                          selectedColor = color;
+                        });
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+                ),
+              ),
+            ),
               ],
             ),
           ),
@@ -109,10 +147,6 @@ class _NoteScreenState extends State<NoteScreen> {
               keyboardType: TextInputType.multiline,
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: ,
-          // )
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -130,4 +164,5 @@ class _NoteScreenState extends State<NoteScreen> {
       ),
     );
   }
+  
 }

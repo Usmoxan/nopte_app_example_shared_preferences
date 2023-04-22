@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
+  color_picker_field:
+    dependency: "direct main"
+    description:
+      name: color_picker_field
+      sha256: "89276a53a47d9eab2e5e49cb74503e52b3468005f9cb3210299d22502f275a34"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -49,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -73,11 +89,35 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  flex_color_picker:
+    dependency: "direct main"
+    description:
+      name: flex_color_picker
+      sha256: fc035dbef0975dd2650f9db1335c552e3b0ce87da4900b00f6b98cd6c78cbe42
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
+  flex_seed_scheme:
+    dependency: transitive
+    description:
+      name: flex_seed_scheme
+      sha256: b3678d82403c13dec2ee2721e078b26f14577712411b6aa981b0f4269df3fabb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.4"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_hsvcolor_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_hsvcolor_picker
+      sha256: "5612d51d3f826f7c7f5cb8c2462a9d13f2b71884f4765aaf69f04e3ee06a18bf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -86,6 +126,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_material_color_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_material_color_picker
+      sha256: "64432c3b13bbcc6f428bae9d2e75b1b3da1e6f3219979e08a3bd9f176781d9f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0+2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -136,6 +184,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
+  o_color_picker:
+    dependency: "direct main"
+    description:
+      name: o_color_picker
+      sha256: "9f731d1d62401fb7ab762182e24f036ac55876b627309fee08342302c6b89c76"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   path:
     dependency: transitive
     description:
@@ -327,4 +383,4 @@ packages:
     version: "1.0.0"
 sdks:
   dart: ">=2.19.5 <3.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.7.0"
