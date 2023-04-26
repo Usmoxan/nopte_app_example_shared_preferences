@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nopte_app_example_shared_preferences/new.dart';
 
 import 'note_list_screen.dart';
 

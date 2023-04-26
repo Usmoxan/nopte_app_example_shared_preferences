@@ -1,21 +1,25 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:o_color_picker/o_color_picker.dart';
 import 'model/model.dart';
 import 'note_list.dart';
+import 'package:intl/intl_browser.dart';
 
 class NoteScreen extends StatefulWidget {
   final Notes note;
 
-  const NoteScreen({super.key, required this.note});
+
+  const NoteScreen({
+    super.key,
+    required this.note,
+
+  });
 
   @override
   _NoteScreenState createState() => _NoteScreenState();
 }
 
 class _NoteScreenState extends State<NoteScreen> {
-  late var moonLanding = DateTime.parse('1969-07-20 20:18:04Z');
   Color? selectedColor = Colors.lightGreen[300];
   late TextEditingController _textEditingController, _titleEditingController;
 
@@ -24,7 +28,7 @@ class _NoteScreenState extends State<NoteScreen> {
   @override
   void initState() {
     super.initState();
-    moonLanding = DateTime.parse('1969-07-20 20:18:04Z');
+
     _textEditingController = TextEditingController(text: widget.note.content);
     _titleEditingController = TextEditingController(text: widget.note.title);
     _noteList = NoteList();
@@ -38,9 +42,13 @@ class _NoteScreenState extends State<NoteScreen> {
     super.dispose();
   }
 
+// Create a DateFormat object with the desired format
+  DateFormat formatter = DateFormat('yyyy/MM/dd HH:mm');
   @override
   Widget build(BuildContext context) {
     var fullMaterialColors;
+    // Format the DateTime object using the DateFormat object
+    String formattedDateTime = formatter.format(DateTime.now());
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -150,7 +158,7 @@ class _NoteScreenState extends State<NoteScreen> {
                       height: 5,
                     ),
                     Text(
-                     "${moonLanding = DateTime.now()}",
+                      formattedDateTime,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
@@ -204,7 +212,8 @@ class _NoteScreenState extends State<NoteScreen> {
                   .toString()
                   .replaceAll('Color(', '')
                   .replaceAll(')', ''),
-              createdAt: DateTime.now(), dateTimeNow: DateTime.now(),
+              createdAt: DateTime.now(),
+              dateTimeNow: DateTime.now(),
             );
             await _noteList.add(note);
             Navigator.pop(context);

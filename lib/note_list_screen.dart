@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nopte_app_example_shared_preferences/copy_note.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'model/model.dart';
 import 'note_add.dart';
 import 'note_list.dart';
+import 'package:intl/intl_browser.dart';
 
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({super.key});
@@ -18,7 +20,7 @@ class NoteListScreen extends StatefulWidget {
 
 class _NoteListScreenState extends State<NoteListScreen> {
   late TextEditingController _titleEditingController;
-late NoteList _noteList;
+  late NoteList _noteList;
   final TextEditingController _searchController = TextEditingController();
   List<Notes> _notes = [];
 
@@ -33,7 +35,9 @@ late NoteList _noteList;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? notesJson = prefs.getStringList('notes');
     if (notesJson != null) {
-      _notes = notesJson.map((noteJson) => Notes.fromJson(jsonDecode(noteJson))).toList();
+      _notes = notesJson
+          .map((noteJson) => Notes.fromJson(jsonDecode(noteJson)))
+          .toList();
     }
     setState(() {});
   }
@@ -88,7 +92,6 @@ late NoteList _noteList;
           IconButton(
             onPressed: () {
               setState(() {
-             
                 _loadNotes();
               });
             },
@@ -167,6 +170,7 @@ late NoteList _noteList;
                                 builder: (context) => CopyPage(
                                   title: notes.title!,
                                   subtitle: notes.content!,
+                                  dateTime: notes.createdAt!,
                                 ),
                               ));
                         });
@@ -195,8 +199,7 @@ late NoteList _noteList;
                                     width: 7,
                                     decoration: BoxDecoration(
                                       color: Color(
-                                        int.parse(
-                                            notes.color!),
+                                        int.parse(notes.color!),
                                       ),
                                       borderRadius: const BorderRadius.only(
                                         bottomLeft: Radius.circular(8),
@@ -215,25 +218,20 @@ late NoteList _noteList;
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                         notes.title!,
+                                          notes.title!,
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),
                                         ),
                                         Text(
-                                         notes.content!,
+                                          notes.content!,
                                           maxLines: 2,
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
                                           ),
                                         ),
-                                        // ListTile(
-                                        //   title: Text(note.title ?? ''),
-                                        //   subtitle: Text(note.content ?? ''),
-                                        //   // trailing: Text(note.dateTimeNow),
-                                        // ),
                                       ],
                                     ),
                                   ),
@@ -296,7 +294,10 @@ late NoteList _noteList;
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NoteScreen(note: note),
+              builder: (context) => NoteScreen(
+                note: note,
+              
+              ),
             ),
           );
         },
