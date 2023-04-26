@@ -15,6 +15,7 @@ class NoteScreen extends StatefulWidget {
 }
 
 class _NoteScreenState extends State<NoteScreen> {
+  late var moonLanding = DateTime.parse('1969-07-20 20:18:04Z');
   Color? selectedColor = Colors.lightGreen[300];
   late TextEditingController _textEditingController, _titleEditingController;
 
@@ -23,6 +24,7 @@ class _NoteScreenState extends State<NoteScreen> {
   @override
   void initState() {
     super.initState();
+    moonLanding = DateTime.parse('1969-07-20 20:18:04Z');
     _textEditingController = TextEditingController(text: widget.note.content);
     _titleEditingController = TextEditingController(text: widget.note.title);
     _noteList = NoteList();
@@ -41,11 +43,10 @@ class _NoteScreenState extends State<NoteScreen> {
     var fullMaterialColors;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
-        backgroundColor: const Color.fromARGB(255, 180, 179, 179),
-      ),
-      body: Column(
-        children: [
+        backgroundColor: Colors.white,
+        actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -66,6 +67,10 @@ class _NoteScreenState extends State<NoteScreen> {
               ],
             ),
           ),
+        ],
+      ),
+      body: Column(
+        children: [
           const SizedBox(
             height: 20,
           ),
@@ -82,9 +87,10 @@ class _NoteScreenState extends State<NoteScreen> {
                 ),
                 TextButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (var states) => selectedColor!,
-                  )),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (var states) => selectedColor!,
+                    ),
+                  ),
                   child: const Text(
                     '',
                     style: TextStyle(
@@ -116,6 +122,43 @@ class _NoteScreenState extends State<NoteScreen> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Edited: 8 Apr 15:22",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    Icon(
+                      Icons.access_alarm_outlined,
+                      size: 17,
+                      color: Colors.grey,
+                    ),
+                    Icon(
+                      Icons.lock,
+                      size: 17,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                     "${moonLanding = DateTime.now()}",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
@@ -127,7 +170,7 @@ class _NoteScreenState extends State<NoteScreen> {
               onChanged: (content) {
                 widget.note.content = content;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Enter  note title here',
               ),
               maxLines: null,
@@ -152,17 +195,25 @@ class _NoteScreenState extends State<NoteScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Notes note = Notes(
-            title: _titleEditingController.text,
-            content: _textEditingController.text,
-            color: selectedColor
-                .toString()
-                .replaceAll('Color(', '')
-                .replaceAll(')', ''),
-            createdAt: DateTime.now(),
-          );
-          await _noteList.add(note);
-          Navigator.pop(context);
+          if (_textEditingController.text.isNotEmpty &&
+              _titleEditingController.text.isNotEmpty) {
+            Notes note = Notes(
+              title: _titleEditingController.text,
+              content: _textEditingController.text,
+              color: selectedColor
+                  .toString()
+                  .replaceAll('Color(', '')
+                  .replaceAll(')', ''),
+              createdAt: DateTime.now(), dateTimeNow: DateTime.now(),
+            );
+            await _noteList.add(note);
+            Navigator.pop(context);
+          } else {
+            const snackBar = SnackBar(
+              content: Text('Write text!'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
         child: const Icon(Icons.check),
       ),

@@ -30,6 +30,10 @@ class NoteList {
     await saveNotes();
   }
 
+  Future<void> remove(String txt) async {
+    notes.remove(txt);
+  }
+
   Future<void> saveNotes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> notesJson =
