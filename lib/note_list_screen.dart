@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'model/model.dart';
 import 'note_add.dart';
 import 'note_list.dart';
-import 'package:intl/intl_browser.dart';
 
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({super.key});
@@ -33,7 +32,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
 
   void _loadNotes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? notesJson = prefs.getStringList('notes');
+    List<String>? notesJson = prefs.getStringList('notes2');
     if (notesJson != null) {
       _notes = notesJson
           .map((noteJson) => Notes.fromJson(jsonDecode(noteJson)))
@@ -70,10 +69,10 @@ class _NoteListScreenState extends State<NoteListScreen> {
           ),
         ),
         actions: [
-          Image.network(
-            "https://lh3.googleusercontent.com/rPyc0vvFrkZKx5nxdYWldCzbewP33KOpf4VWoCs7dbqkhcxnHVuBkYKVD6RnSwLc-pmkSEujt2t8gjSyafyLx1boTnj00RdaOh6JvqIMFA",
-            height: 60,
-            width: 60,
+          Image.asset(
+            "asset/image.png",
+            height: 40,
+            width: 40,
           ),
           IconButton(
             onPressed: () {},
@@ -246,11 +245,13 @@ class _NoteListScreenState extends State<NoteListScreen> {
                                           actions: <Widget>[
                                             CupertinoDialogAction(
                                               isDefaultAction: true,
-                                              onPressed: () {
+                                              onPressed: () async {
                                                 setState(() {
-                                                  _noteList.delete(index);
+                                                  _notes.removeAt(index);
+                                                  print(index);
                                                   Navigator.pop(context);
                                                 });
+                                                await saveNotes();
                                               },
                                               child: Text("Yes"),
                                             ),
@@ -296,7 +297,6 @@ class _NoteListScreenState extends State<NoteListScreen> {
             MaterialPageRoute(
               builder: (context) => NoteScreen(
                 note: note,
-              
               ),
             ),
           );
@@ -304,5 +304,12 @@ class _NoteListScreenState extends State<NoteListScreen> {
         child: const Icon(Icons.edit),
       ),
     );
+  }
+
+  Future<void> saveNotes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> notesJson =
+        _notes.map((note) => jsonEncode(note.toJson())).toList();
+    await prefs.setStringList('notes2', notesJson);
   }
 }

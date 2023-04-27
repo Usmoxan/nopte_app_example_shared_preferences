@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:o_color_picker/o_color_picker.dart';
 import 'model/model.dart';
 import 'note_list.dart';
-import 'package:intl/intl_browser.dart';
+
 
 class NoteScreen extends StatefulWidget {
   final Notes note;
